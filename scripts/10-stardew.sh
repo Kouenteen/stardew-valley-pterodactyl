@@ -1,5 +1,7 @@
 #!/bin/bash
 
+HOME=/home/container
+
 # graceful_shutdown and trap SIGTERM should still be at the top
 graceful_shutdown() {
   echo "Received SIGTERM. Cleaning up..."
@@ -25,44 +27,44 @@ launch_stardew() {
     fi
 
     echo "Executing Stardew/SMAPI Binaries!"
-    SPDLOG_LEVEL=off mangohud --dlsym /game/stardewvalley/StardewValley
+    SPDLOG_LEVEL=off mangohud --dlsym $HOME/game/stardewvalley/StardewValley
     ((retry_count++))
     echo "Restart attempt ${retry_count}. Stardew Valley crashed or exited. Restarting..."
   done
 }
 
 # FIRST-RUNS
-if [[ ! -d /config/modconfs/autoload ]]; then
+if [[ ! -d $HOME/config/modconfs/autoload ]]; then
     echo "Creating Directory: autoload"
-    mkdir -p /config/modconfs/autoload
+    mkdir -p $HOME/config/modconfs/autoload
 fi
 
-if [[ ! -d /config/modconfs/always_on_server ]]; then
+if [[ ! -d $HOME/config/modconfs/always_on_server ]]; then
     echo "Creating Directory: always_on_server"
-    mkdir -p /config/modconfs/always_on_server
+    mkdir -p $HOME/config/modconfs/always_on_server
 fi
 
-if [[ ! -f /config/modconfs/autoload/config.json ]]; then
+if [[ ! -f $HOME/config/modconfs/autoload/config.json ]]; then
     echo "Moving config: autoload"
-    mv /tmp/autoload_config.json /config/modconfs/autoload/config.json
+    mv $HOME/tmp/autoload_config.json $HOME/config/modconfs/autoload/config.json
 fi
 
-if [[ ! -f /config/modconfs/always_on_server/config.json ]]; then
+if [[ ! -f $HOME/config/modconfs/always_on_server/config.json ]]; then
     echo "Moving config: always on server"
-    mv /tmp/always_on_server_config.json /config/modconfs/always_on_server/config.json
+    mv $HOME/tmp/always_on_server_config.json $HOME/config/modconfs/always_on_server/config.json
 fi
 
 # ALWAYS
-if [[ ! -d /config/.config/MangoHud ]]; then
-    mkdir -p /config/.config/MangoHud
+if [[ ! -d $HOME/config/.config/MangoHud ]]; then
+    mkdir -p $HOME/config/.config/MangoHud
 fi
 
-if [[ ! -f /config/.config/MangoHud/MangoHud.conf ]]; then
-    mv /tmp/MangoHud.conf /config/.config/MangoHud/MangoHud.conf
+if [[ ! -f $HOME/config/.config/MangoHud/MangoHud.conf ]]; then
+    mv $HOME/tmp/MangoHud.conf $HOME/config/.config/MangoHud/MangoHud.conf
 fi
 
-ln -sv /config/modconfs/autoload/config.json /game/stardewvalley/Mods/AutoLoadGame/config.json
-ln -sv /config/modconfs/always_on_server/config.json /game/stardewvalley/Mods/Always\ On\ Server/config.json
+ln -sv $HOME/config/modconfs/autoload/config.json $HOME/game/stardewvalley/Mods/AutoLoadGame/config.json
+ln -sv $HOME/config/modconfs/always_on_server/config.json $HOME/game/stardewvalley/Mods/Always\ On\ Server/config.json
 
 echo "Starting..."
 
