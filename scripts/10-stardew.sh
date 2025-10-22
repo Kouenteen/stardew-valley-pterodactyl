@@ -25,7 +25,7 @@ launch_stardew() {
     fi
 
     echo "Executing Stardew/SMAPI Binaries!"
-    SPDLOG_LEVEL=off mangohud --dlsym /data/stardewvalley/StardewValley
+    SPDLOG_LEVEL=off mangohud --dlsym /game/stardewvalley/StardewValley
     ((retry_count++))
     echo "Restart attempt ${retry_count}. Stardew Valley crashed or exited. Restarting..."
   done
@@ -61,8 +61,8 @@ if [[ ! -f /config/.config/MangoHud/MangoHud.conf ]]; then
     mv /tmp/MangoHud.conf /config/.config/MangoHud/MangoHud.conf
 fi
 
-ln -sv /config/modconfs/autoload/config.json /data/stardewvalley/Mods/AutoLoadGame/config.json
-ln -sv /config/modconfs/always_on_server/config.json /data/stardewvalley/Mods/Always\ On\ Server/config.json
+ln -sv /config/modconfs/autoload/config.json /game/stardewvalley/Mods/AutoLoadGame/config.json
+ln -sv /config/modconfs/always_on_server/config.json /game/stardewvalley/Mods/Always\ On\ Server/config.json
 
 echo "Starting..."
 
